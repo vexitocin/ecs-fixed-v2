@@ -1,4 +1,4 @@
-<img align="center" href="https://raw.githubusercontent.com/vexitocin/ecs-fixed-v2/refs/heads/main/services/2016-roblox-main/public/img/roblox_logo.svg">
+<img align="center" href="https://imglink.cc/cdn/dCa6FTDDjD.png">
 <h1 align="center">Economy Simulator Source Code (Fixed)</h1>
 
 <div align="center">
