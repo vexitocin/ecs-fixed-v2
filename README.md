@@ -1,10 +1,11 @@
-# Economy Simulator source code (fixed)
+<h1 align="center">Economy Simulator source code (fixed)</h1>
 
 For this to work you will need a Domain, and Windows (Linux hasn't been tested yet).
 
 The WebClient will be added soon.
 
-## 1. Installing Redis
+<h2 align="center">1. Installing Redis</h2>
+
 Open PowerShell as Administrator, then run ```wsl --install```. This installs Ubuntu on Windows.
 
 if you get an error, enable "Windows Subsystem For Linux" and "Windows Virtual Machine" in the "Turn Windows features on or off" application.
@@ -17,7 +18,8 @@ Run ```sudo apt update``` after its done installing, after it updates its packag
 
 When it has finished installing run ```redis-server```. Keep this window open!
 
-## 2. Installing the other Prerequistes
+<h2 align="center">2. Installing the other Prerequistes</h2>
+
 These are all ```.msi``` files which install the other required applications for Economy Simulator to run. Don't run any of these yet!
 
 **Node.js 18**: ```https://nodejs.org/dist/v18.16.1/node-v18.16.1-x64.msi```
@@ -28,13 +30,13 @@ These are all ```.msi``` files which install the other required applications for
 
 **Golang**: ```https://go.dev/dl/go1.20.6.windows-amd64.msi```
 
-## 3. Installing
+<h2 align="center">3. Installing</h2>
 
 Run the installer msi file and press next until it asks for a password, make sure you remember this. then keep pressing next and wait for it to install.
 
 Then you can install Node.js, Dotnet and then Golang.
 
-## 4. Creating the Database
+<h2 align="center">4. Creating the Database</h2>
 
 Once PostgreSQL has installed, open the ```SQL Shell (psql)``` shortcut that has been made in your Start Menu (Windows Button).
 
@@ -48,10 +50,12 @@ Copy this command into the Shell, replacing ```database_name``` with your actual
 
 It should respond by saying "CREATE DATABASE", this means it was created successfully.
 
-## 5. Configuration
-### Part I - Database Migration
+<h2 align="center">5. Configuration</h2>
+
+<h3 align="center">Part I - Database Migration</h3>
+
 Navigate to ```services/api``` and make a file named ```config.json``` and paste this code into it.
-```
+```json
 {
     "knex": {
 	"client": "pg",
@@ -70,7 +74,7 @@ Now open Command Prompt in the ```services/api``` folder and run ```npm i``` whi
 
 When this completes, Run ```npx knex migrate:latest``` which saves the Database Tables and Structure to the one you have made.
 
-### Part II - Backend Config
+<h3 align="center">Part II - Backend Config</h3>
 
 Now Navigate to ```services/Roblox/Roblox.Website``` and rename ```appsettings.example.json``` to ```appsettings.json``` and then open it. go to line 37 and change the line ```"OwnerUserId": "12",``` to ```"OwnerUserId": "1",```
 
@@ -78,22 +82,23 @@ Then navigate to line 26, and change the line ```"Postgres": "Host=127.0.0.1; Da
 
 Now press ```ctrl + h``` and change ```D:\\path\\``` to where you have downloaded this source code to, keeping the double backslashes.
 
-### Part III - Fixing folders
+<h3 align="center">Part III - Fixing folders</h3>
 
 Go into ```services/api``` create a folder named ```storage``` inside that folder make one named ```asset``` then go to ```services/api/public/images``` and make two folders named ```thumbnails``` and ```group```.
 
-### Part IV - Building the Backend and Admin Panel
+<h3 align="center">Part IV - Building the Backend and Admin Panel</h3>
 
 Then Go to ```services/Roblox/Roblox.Website``` and open a Command Prompt, Run ```dotnet run```
 
 After, Go to ```services/admin``` and run ```npm i``` and ```npm run build``` in a command prompt.
 
-### Part V - Frontend Config
+<h3 align="center">Part V - Frontend Config</h3>
+
 go to ```services/2016-roblox-main``` and create a file named ```config.json```
 
 paste this into it
 
-```
+```json
 {
   "serverRuntimeConfig": {
     "backend": {"csrfKey":"g0qiiDZw7jM2l54+7qsuRaymx6nBGdCKT9Kc0bqJB3aZ26rSsPMXfg8uWfUBtTqWenDVy+AQS1jkdrgvUwVSsw=="}
@@ -129,7 +134,7 @@ Replacing your.domain with your Domain.
 
 Now in a Command Prompt in the same folder, run ```npm i``` and ```npm run prod```, which builds and starts the Frontend.
 
-### Part VI - Asset Validation & Renders
+<h3 align="center">Part VI - Asset Validation & Renders</h3>
 
 Navigate to ```services/AssetValidationServiceV2``` and in a new Command Prompt run ```go run main.go```, and when it asks, allow it access to the Firewall.
 
@@ -138,7 +143,7 @@ Go to ```services/RCCService``` and in a Command Prompt run ```RCCService.exe -c
 Staying in the RCCService folder, edit ```AppSettings.xml```, changing the URL from ```economy-simulator.org``` to your Domain.
 
 Now go to ```services/game-server``` and make a file named config.json in the file paste this, replacing the authorisation with the ones from the Backends ```Appsettings.json```.
-```
+```json
 {
     "rcc": "C:\\Users\\yourusername\\Downloads\\ECS\\services\\RCCService",
     "authorization": "90WGEGNJGWHIWGOI31900H9GIOGI",
@@ -157,7 +162,7 @@ In ```gameserver.lua```, press ```ctrl + h``` and replace ```economy-simulator.o
 
 Now go back into game-server and run ```npm i``` ```npm run build``` and ```npm run start```.
 
-## 6. Cloudflare Tunnels
+<h2 align="center">6. Cloudflare Tunnels</h2>
 
 Ok, so now you've got the whole site fully setup, exit out of all the cmd tabs, and go to ```https://cloudflare.com``` and sign up, or login.
 
@@ -173,11 +178,11 @@ Open a new PowerShell window and copy the phrase under ```run the following comm
 
 On domain put your domain and type put http and url put ```localhost:5000``` and press save hostname.
 
-## 7. Making ID 1's account
+<h2 align="center">7. Making ID 1's account</h2>
 
 On your site, sign up as usual, and your application should be automatically accepted by the backend.
 
-## 8. Running the site
+<h2 align="center">8. Running the site</h2>
 
 For running the website 24/7, I suggest buying a VPS, which is a Server which hosts your website. Don't get the cheapest one, as they are usually shit.
 
