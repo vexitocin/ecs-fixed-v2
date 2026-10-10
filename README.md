@@ -47,7 +47,7 @@ Copy this command into the Shell, replacing ```database_name``` with your actual
 It should respond by saying "CREATE DATABASE", this means it was created successfully.
 
 ## 5. Configuration
-### Part 1
+### Part 1 - Database Migration
 Navigate to ```services/api``` and make a file named ```config.json``` and paste this code into it.
 ```
 {
@@ -68,19 +68,25 @@ Now open Command Prompt in the ```services/api``` folder and run ```npm i``` whi
 
 When this completes, Run ```npx knex migrate:latest``` which saves the Database Tables and Structure to the one you have made.
 
-### Part 2
+### Part 2 - Backend Config
+
 Now Navigate to ```services/Roblox/Roblox.Website``` and rename ```appsettings.example.json``` to ```appsettings.json``` and then open it. go to line 37 and change the line ```"OwnerUserId": "12",``` to ```"OwnerUserId": "1",```
 
 Then navigate to line 26, and change the line ```"Postgres": "Host=127.0.0.1; Database=economysimulator; Password=test; Username=postgres; Maximum Pool Size=20",``` to ``` "Postgres": "Host=127.0.0.1; Database=your_database; Password=your_password; Username=postgres; Maximum Pool Size=20",```, replacing the Database and Password once again
 
-Now press ```ctrl + h``` and change 
+Now press ```ctrl + h``` and change ```D:\\path\\``` to where you have downloaded this source code to, keeping the double backslashes.
 
-Go into ```services/api``` create a folder named ```storage``` inside that folder make one named ```asset``` then go to ```services/api/public/images``` make a folder named ```thumbnails``` and ```group```
+### Part 3 - Fixing folders
 
-go to ```services/Roblox/Roblox.Website``` and in command prompt do ```dotnet run```
+Go into ```services/api``` create a folder named ```storage``` inside that folder make one named ```asset``` then go to ```services/api/public/images``` and make two folders named ```thumbnails``` and ```group```.
 
-go to ```services/admin``` and run ```npm i``` and ```npm run build``` in a command.
+### Part 4 - Building the Backend and Admin Panel
 
+Then Go to ```services/Roblox/Roblox.Website``` and open a Command Prompt, Run ```dotnet run```
+
+After, Go to ```services/admin``` and run ```npm i``` and ```npm run build``` in a command prompt.
+
+## Part 5 - Frontend Config
 go to ```services/2016-roblox-main``` and create a file named ```config.json```
 
 paste this into it
@@ -117,15 +123,19 @@ paste this into it
 }
 ```
 
-replacing your.domain with your domain.
+Replacing your.domain with your Domain.
 
-now in a command in the same folder do ```npm i``` and ```npm run build``` then ```npm run start```
+Now in a Command Prompt in the same folder, run ```npm i``` and ```npm run prod```, which builds and starts the Frontend.
 
-now go to ```services/AssetValidationServiceV2``` and in command do ```go run main.go``` 
+### Part 6 - Asset Validation & Renders
 
-now go to ```services/RCCService``` and in command do ```RCCService.exe -console -placeid:1818```
+Navigate to ```services/AssetValidationServiceV2``` and in a new Command Prompt run ```go run main.go```, and when it asks, allow it access to the Firewall.
 
-now go to ```services/game-server``` and make a file named config.json in the file paste this
+Go to ```services/RCCService``` and in a Command Prompt run ```RCCService.exe -console -placeid:1818```. (For this source code, patching is Not required).
+
+Staying in the RCCService folder, edit ```AppSettings.xml```, changing the URL from ```economy-simulator.org``` to your Domain.
+
+Now go to ```services/game-server``` and make a file named config.json in the file paste this, replacing the authorisation with the ones from the Backends ```Appsettings.json```.
 ```
 {
     "rcc": "C:\\Users\\yourusername\\Downloads\\ECS\\services\\RCCService",
@@ -139,37 +149,37 @@ now go to ```services/game-server``` and make a file named config.json in the fi
 }
 ```
 
-now this gets a little complicated, go into ```services/game-server/scripts```
+Now go into ```services/game-server/scripts```
 
+In ```gameserver.lua```, press ```ctrl + h``` and replace ```economy-simulator.org``` with your Domain once again, then do the same in every file in the ```player``` folder and the ```asset``` folder, making sure **not** to replace HTTP or HTTPS.
 
-in gameserver.lua press ```ctrl + h``` and replace ```economy-simulator.org``` with your domain, then go back to scripts, go into ```player``` folder and each file do the replacing, then in asset folders files. make sure to not replace the http and https
+Now go back into game-server and run ```npm i``` ```npm run build``` and ```npm run start```.
 
-now go back into game-server and run ```npm i``` ```npm run build``` and ```npm run start```
+## 6. Cloudflare Tunnels
 
-step 6. cloudflare tunneling
+Ok, so now you've got the whole site fully setup, exit out of all the cmd tabs, and go to ```https://cloudflare.com``` and sign up, or login.
 
-Ok, so we got the whole site setup, exit out of all the cmd tabs, and go to https://cloudflare.com and sign up, add your domain onto the site. 
+Add your domain onto Cloudflare if you haven't already. 
 
-then go into the domain, and on the side bar press ```traffic``` then press ```cloudflare tunnel``` then launch zero trust dashboard sign up for the free option if it asks you to do that.
+Then select your Domain, and on the Sidebar press ```Traffic``` then press ```Cloudflare tunnel``` then launch zero trust dashboard sign up for the free option if it asks you to do that, for some reason Cloudflare needs a Credit card even for the free option.
 
-then press your email.
+Press your email, and on the sidebar press ```Access``` then ```Tunnels``` then create a tunnel, name it and press save tunnel.
 
-on the sidebar press ```access``` then ```tunnels``` then create a tunnel, name it and press save tunnel.
+Then download Cloudflared: ```https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.msi```.
 
-then download https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.msi and run the power shell as administrator.
+Open a new PowerShell window and copy the phrase under ```run the following command``` on the Cloudflare website and paste it into the PowerShell window and scroll down and wait for "Connectors" to show your computer as connected and press next.
 
-it says ```run the following command``` copy that and paste it into the powershell and scroll down on cloudflare wait for connectors to show your connected and press next.
+On domain put your domain and type put http and url put ```localhost:5000``` and press save hostname.
 
-on domain put your domain and type put http and url put ```localhost:5000``` and press save hostname.
+## 7. Making ID 1's account
 
-Step 7. 
+On your site, sign up as usual, and your application should be automatically accepted by the backend.
 
-congrats site is setup go into ```/services``` on the source and run ```runall.bat``` and then when its all done go to your site, sign up the ROBLOX account, make sure its ID 1 and is all caps, then go to https://your.domain/admin and go to create player, put id 2 and name UGC and a random password, then go to the user on admin panel and nullify password.
+## 8. Running the site
 
-now go back to create and id 12 name BadDecisions make sure its a hard pass.
+For running the website 24/7, I suggest buying a VPS, which is a Server which hosts your website. Don't get the cheapest one, as they are usually shit.
 
-now you can sign up.
+To run the site, run ```start site.bat``` which is located in ```services```.
 
-congrats site made
-
-- Made by Deadly
+**Economy Simulator is now runnning!***
+happy skidding - vexi
