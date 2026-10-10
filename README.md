@@ -18,13 +18,13 @@ When it has finished installing run ```redis-server```. Keep this window open!
 ## 2. Installing the other Prerequistes
 These are all ```.msi``` files which install the other required applications for Economy Simulator to run. Don't run any of these yet!
 
-Node.js 18: ```https://nodejs.org/dist/v18.16.1/node-v18.16.1-x64.msi```
+**Node.js 18**: ```https://nodejs.org/dist/v18.16.1/node-v18.16.1-x64.msi```
 
-PostgreSQL: ```https://sbp.enterprisedb.com/getfile.jsp?fileid=1258627```
+**PostgreSQL**: ```https://sbp.enterprisedb.com/getfile.jsp?fileid=1258627```
 
-Dotnet 6.0: ```https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.412-windows-x64-installer```
+**Dotnet 6.0**: ```https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.412-windows-x64-installer```
 
-Golang: ```https://go.dev/dl/go1.20.6.windows-amd64.msi```
+**Golang**: ```https://go.dev/dl/go1.20.6.windows-amd64.msi```
 
 ## 3. Installing
 
@@ -47,7 +47,7 @@ Copy this command into the Shell, replacing ```database_name``` with your actual
 It should respond by saying "CREATE DATABASE", this means it was created successfully.
 
 ## 5. Configuration
-### Part 1 - Database Migration
+### Part I - Database Migration
 Navigate to ```services/api``` and make a file named ```config.json``` and paste this code into it.
 ```
 {
@@ -68,7 +68,7 @@ Now open Command Prompt in the ```services/api``` folder and run ```npm i``` whi
 
 When this completes, Run ```npx knex migrate:latest``` which saves the Database Tables and Structure to the one you have made.
 
-### Part 2 - Backend Config
+### Part II - Backend Config
 
 Now Navigate to ```services/Roblox/Roblox.Website``` and rename ```appsettings.example.json``` to ```appsettings.json``` and then open it. go to line 37 and change the line ```"OwnerUserId": "12",``` to ```"OwnerUserId": "1",```
 
@@ -76,17 +76,17 @@ Then navigate to line 26, and change the line ```"Postgres": "Host=127.0.0.1; Da
 
 Now press ```ctrl + h``` and change ```D:\\path\\``` to where you have downloaded this source code to, keeping the double backslashes.
 
-### Part 3 - Fixing folders
+### Part III - Fixing folders
 
 Go into ```services/api``` create a folder named ```storage``` inside that folder make one named ```asset``` then go to ```services/api/public/images``` and make two folders named ```thumbnails``` and ```group```.
 
-### Part 4 - Building the Backend and Admin Panel
+### Part IV - Building the Backend and Admin Panel
 
 Then Go to ```services/Roblox/Roblox.Website``` and open a Command Prompt, Run ```dotnet run```
 
 After, Go to ```services/admin``` and run ```npm i``` and ```npm run build``` in a command prompt.
 
-## Part 5 - Frontend Config
+### Part V - Frontend Config
 go to ```services/2016-roblox-main``` and create a file named ```config.json```
 
 paste this into it
@@ -127,7 +127,7 @@ Replacing your.domain with your Domain.
 
 Now in a Command Prompt in the same folder, run ```npm i``` and ```npm run prod```, which builds and starts the Frontend.
 
-### Part 6 - Asset Validation & Renders
+### Part VI - Asset Validation & Renders
 
 Navigate to ```services/AssetValidationServiceV2``` and in a new Command Prompt run ```go run main.go```, and when it asks, allow it access to the Firewall.
 
@@ -181,5 +181,8 @@ For running the website 24/7, I suggest buying a VPS, which is a Server which ho
 
 To run the site, run ```start site.bat``` which is located in ```services```.
 
-**Economy Simulator is now runnning!***
-happy skidding - vexi
+**Economy Simulator is now runnning!**
+
+happy skidding
+
+- vexi
