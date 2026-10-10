@@ -2,6 +2,8 @@
 
 For this to work you will need a Domain, and Windows (Linux hasn't been tested yet).
 
+The WebClient will be added soon.
+
 ## 1. Installing Redis
 Open PowerShell as Administrator, then run ```wsl --install```. This installs Ubuntu on Windows.
 
