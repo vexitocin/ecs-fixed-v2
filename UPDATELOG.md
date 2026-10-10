@@ -4,17 +4,12 @@
 
 <h1 align="center">Added Features / Upcoming Features</h1>
 
-<div align="center">
-  
-```json
-  1. appsettings.example.json re-implemented
+1. appsettings.example.json re-implemented
 
-  2. Verified Badge (soon)
+2. Verified Badge (soon)
 
-  3. R15 Support (soon)
+3. R15 Support (soon)
 
-  4. Other Years (soon)
+4. Other Years (soon)
 
-  5. Clients (soon)
-```
-</div>
+5. Clients (soon)
