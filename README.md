@@ -1,102 +1,116 @@
-<h1 align="center">Economy Simulator source code (fixed)</h1>
+<div align="center">
 
-<p align="center">For this to work you will need a Domain, and Windows (Linux hasn't been tested yet).</p>
+# Economy Simulator Source Code (Fixed)
 
-<p align="center">The WebClient will be added soon.</p>
+*For this to work you will need a Domain, and Windows (Linux hasn't been tested yet).*
 
-<h2 align="center">1. Installing Redis</h2>
+**The WebClient will be added soon.**
 
-Open PowerShell as Administrator, then run ```wsl --install```. This installs Ubuntu on Windows.
+---
 
-if you get an error, enable "Windows Subsystem For Linux" and "Windows Virtual Machine" in the "Turn Windows features on or off" application.
+## 1. Installing Redis
 
-Once installation is complete, restart your computer then open WSL, Ubuntu will open, let it install.
+Open PowerShell as Administrator, then run `wsl --install`. This installs Ubuntu on Windows.
 
-Afterwards, it will ask for a uixd name. Enter a name such as "ECS", or whatever name you want. then enter a password. 
+*If you get an error, enable "Windows Subsystem For Linux" and "Windows Virtual Machine" in the "Turn Windows features on or off" application.*
 
-Run ```sudo apt update``` after its done installing, after it updates its packages run ```sudo apt install redis``` and press the "y" key when it asks for approval.
+Once installation is complete, *restart your computer* then open WSL, Ubuntu will open, let it install.
 
-When it has finished installing run ```redis-server```. Keep this window open!
+Afterwards, it will ask for a unix name. Enter a name such as **"ECS"**, or whatever name you want. Then enter a password.
 
-<h2 align="center">2. Installing the other Prerequistes</h2>
+Run `sudo apt update` after its done installing, after it updates its packages run `sudo apt install redis` and press the **"y"** key when it asks for approval.
 
-These are all ```.msi``` files which install the other required applications for Economy Simulator to run. Don't run any of these yet!
+When it has finished installing run `redis-server`. **Keep this window open!**
 
-**Node.js 18**: ```https://nodejs.org/dist/v18.16.1/node-v18.16.1-x64.msi```
+---
 
-**PostgreSQL**: ```https://sbp.enterprisedb.com/getfile.jsp?fileid=1258627```
+## 2. Installing the Other Prerequisites
 
-**Dotnet 6.0**: ```https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.412-windows-x64-installer```
+*These are all `.msi` files which install the other required applications for Economy Simulator to run.* **Don't run any of these yet!**
 
-**Golang**: ```https://go.dev/dl/go1.20.6.windows-amd64.msi```
+**Node.js 18**: `https://nodejs.org/dist/v18.16.1/node-v18.16.1-x64.msi`
 
-<h2 align="center">3. Installing</h2>
+**PostgreSQL**: `https://sbp.enterprisedb.com/getfile.jsp?fileid=1258627`
 
-Run the installer msi file and press next until it asks for a password, make sure you remember this. then keep pressing next and wait for it to install.
+**Dotnet 6.0**: `https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.412-windows-x64-installer`
 
-Then you can install Node.js, Dotnet and then Golang.
+**Golang**: `https://go.dev/dl/go1.20.6.windows-amd64.msi`
 
-<h2 align="center">4. Creating the Database</h2>
+---
 
-Once PostgreSQL has installed, open the ```SQL Shell (psql)``` shortcut that has been made in your Start Menu (Windows Button).
+## 3. Installing
 
-When the Shell opens, it will promt for a server, database, port and username. Press ```Enter``` for all of these, as these are the default options.
+Run the installer msi file and press next until it asks for a password, **make sure you remember this**. Then keep pressing next and wait for it to install.
 
-Afterwards, it will prompt for the password you set earlier, enter it and you should be met with something like: ```postgres=#```
+*Then you can install Node.js, Dotnet and then Golang.*
 
-Copy this command into the Shell, replacing ```database_name``` with your actual database name.
+---
 
-```CREATE DATABASE database_name;```
+## 4. Creating the Database
 
-It should respond by saying "CREATE DATABASE", this means it was created successfully.
+Once PostgreSQL has installed, open the `SQL Shell (psql)` shortcut that has been made in your Start Menu (Windows Button).
 
-<h2 align="center">5. Configuration</h2>
+When the Shell opens, it will prompt for a server, database, port and username. Press `Enter` for all of these, as these are the default options.
 
-<h3 align="center">Part I - Database Migration</h3>
+Afterwards, it will prompt for the password you set earlier, enter it and you should be met with something like: `postgres=#`
 
-Navigate to ```services/api``` and make a file named ```config.json``` and paste this code into it.
+Copy this command into the Shell, replacing `database_name` with your actual database name.
+
+`CREATE DATABASE database_name;`
+
+It should respond by saying *"CREATE DATABASE"*, this means it was created successfully.
+
+---
+
+## 5. Configuration
+
+### Part I - Database Migration
+
+Navigate to `services/api` and make a file named `config.json` and paste this code into it.
+
 ```json
 {
     "knex": {
-	"client": "pg",
+        "client": "pg",
         "connection": {
-        "host": "127.0.0.1",
-        "user": "postgres",
-        "password": "password",
-        "database": "postgres"
+            "host": "127.0.0.1",
+            "user": "postgres",
+            "password": "password",
+            "database": "postgres"
         }
     }
 }
 ```
-Replace the Password and Database with the ones you have set.
 
-Now open Command Prompt in the ```services/api``` folder and run ```npm i``` which installs the required node modules.
+*Replace the Password and Database with the ones you have set.*
 
-When this completes, Run ```npx knex migrate:latest``` which saves the Database Tables and Structure to the one you have made.
+Now open Command Prompt in the `services/api` folder and run `npm i` which installs the required node modules.
 
-<h3 align="center">Part II - Backend Config</h3>
+When this completes, run `npx knex migrate:latest` which saves the Database Tables and Structure to the one you have made.
 
-Now Navigate to ```services/Roblox/Roblox.Website``` and rename ```appsettings.example.json``` to ```appsettings.json``` and then open it. go to line 37 and change the line ```"OwnerUserId": "12",``` to ```"OwnerUserId": "1",```
+### Part II - Backend Config
 
-Then navigate to line 26, and change the line ```"Postgres": "Host=127.0.0.1; Database=economysimulator; Password=test; Username=postgres; Maximum Pool Size=20",``` to ``` "Postgres": "Host=127.0.0.1; Database=your_database; Password=your_password; Username=postgres; Maximum Pool Size=20",```, replacing the Database and Password once again
+Now navigate to `services/Roblox/Roblox.Website` and rename `appsettings.example.json` to `appsettings.json` and then open it. Go to line 37 and change the line `"OwnerUserId": "12",` to `"OwnerUserId": "1",`
 
-Now press ```ctrl + h``` and change ```D:\\path\\``` to where you have downloaded this source code to, keeping the double backslashes.
+Then navigate to line 26, and change the line `"Postgres": "Host=127.0.0.1; Database=economysimulator; Password=test; Username=postgres; Maximum Pool Size=20",` to `"Postgres": "Host=127.0.0.1; Database=your_database; Password=your_password; Username=postgres; Maximum Pool Size=20",`, *replacing the Database and Password once again.*
 
-<h3 align="center">Part III - Fixing folders</h3>
+Now press `ctrl + h` and change `D:\\path\\` to where you have downloaded this source code to, **keeping the double backslashes.**
 
-Go into ```services/api``` create a folder named ```storage``` inside that folder make one named ```asset``` then go to ```services/api/public/images``` and make two folders named ```thumbnails``` and ```group```.
+### Part III - Fixing Folders
 
-<h3 align="center">Part IV - Building the Backend and Admin Panel</h3>
+Go into `services/api` create a folder named `storage` inside that folder make one named `asset` then go to `services/api/public/images` and make two folders named `thumbnails` and `group`.
 
-Then Go to ```services/Roblox/Roblox.Website``` and open a Command Prompt, Run ```dotnet run```
+### Part IV - Building the Backend and Admin Panel
 
-After, Go to ```services/admin``` and run ```npm i``` and ```npm run build``` in a command prompt.
+Then go to `services/Roblox/Roblox.Website` and open a Command Prompt, run `dotnet run`
 
-<h3 align="center">Part V - Frontend Config</h3>
+After, go to `services/admin` and run `npm i` and `npm run build` in a command prompt.
 
-go to ```services/2016-roblox-main``` and create a file named ```config.json```
+### Part V - Frontend Config
 
-paste this into it
+Go to `services/2016-roblox-main` and create a file named `config.json`
+
+Paste this into it:
 
 ```json
 {
@@ -130,19 +144,20 @@ paste this into it
 }
 ```
 
-Replacing your.domain with your Domain.
+*Replacing `your.domain` with your Domain.*
 
-Now in a Command Prompt in the same folder, run ```npm i``` and ```npm run prod```, which builds and starts the Frontend.
+Now in a Command Prompt in the same folder, run `npm i` and `npm run prod`, which builds and starts the Frontend.
 
-<h3 align="center">Part VI - Asset Validation & Renders</h3>
+### Part VI - Asset Validation & Renders
 
-Navigate to ```services/AssetValidationServiceV2``` and in a new Command Prompt run ```go run main.go```, and when it asks, allow it access to the Firewall.
+Navigate to `services/AssetValidationServiceV2` and in a new Command Prompt run `go run main.go`, and when it asks, **allow it access to the Firewall.**
 
-Go to ```services/RCCService``` and in a Command Prompt run ```RCCService.exe -console -placeid:1818```. (For this source code, patching is Not required).
+Go to `services/RCCService` and in a Command Prompt run `RCCService.exe -console -placeid:1818`. *(For this source code, patching is not required).*
 
-Staying in the RCCService folder, edit ```AppSettings.xml```, changing the URL from ```economy-simulator.org``` to your Domain.
+Staying in the RCCService folder, edit `AppSettings.xml`, changing the URL from `economy-simulator.org` to your Domain.
 
-Now go to ```services/game-server``` and make a file named config.json in the file paste this, replacing the authorisation with the ones from the Backends ```Appsettings.json```.
+Now go to `services/game-server` and make a file named `config.json` in the file paste this, *replacing the authorisation with the ones from the Backend's `appsettings.json`*.
+
 ```json
 {
     "rcc": "C:\\Users\\yourusername\\Downloads\\ECS\\services\\RCCService",
@@ -156,40 +171,48 @@ Now go to ```services/game-server``` and make a file named config.json in the fi
 }
 ```
 
-Now go into ```services/game-server/scripts```
+Now go into `services/game-server/scripts`
 
-In ```gameserver.lua```, press ```ctrl + h``` and replace ```economy-simulator.org``` with your Domain once again, then do the same in every file in the ```player``` folder and the ```asset``` folder, making sure **not** to replace HTTP or HTTPS.
+In `gameserver.lua`, press `ctrl + h` and replace `economy-simulator.org` with your Domain once again, then do the same in every file in the `player` folder and the `asset` folder, making sure **not** to replace HTTP or HTTPS.
 
-Now go back into game-server and run ```npm i``` ```npm run build``` and ```npm run start```.
+Now go back into game-server and run `npm i`, `npm run build`, and `npm run start`.
 
-<h2 align="center">6. Cloudflare Tunnels</h2>
+---
 
-Ok, so now you've got the whole site fully setup, exit out of all the cmd tabs, and go to ```https://cloudflare.com``` and sign up, or login.
+## 6. Cloudflare Tunnels
 
-Add your domain onto Cloudflare if you haven't already. 
+Ok, so now you've got the whole site fully setup, exit out of all the cmd tabs, and go to `https://cloudflare.com` and sign up, or login.
 
-Then select your Domain, and on the Sidebar press ```Traffic``` then press ```Cloudflare tunnel``` then launch zero trust dashboard sign up for the free option if it asks you to do that, for some reason Cloudflare needs a Credit card even for the free option.
+*Add your domain onto Cloudflare if you haven't already.*
 
-Press your email, and on the sidebar press ```Access``` then ```Tunnels``` then create a tunnel, name it and press save tunnel.
+Then select your Domain, and on the Sidebar press `Traffic` then press `Cloudflare tunnel` then launch zero trust dashboard sign up for the free option if it asks you to do that, **for some reason Cloudflare needs a Credit card even for the free option.**
 
-Then download Cloudflared: ```https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.msi```.
+Press your email, and on the sidebar press `Access` then `Tunnels` then create a tunnel, name it and press save tunnel.
 
-Open a new PowerShell window and copy the phrase under ```run the following command``` on the Cloudflare website and paste it into the PowerShell window and scroll down and wait for "Connectors" to show your computer as connected and press next.
+Then download Cloudflared: `https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.msi`.
 
-On domain put your domain and type put http and url put ```localhost:5000``` and press save hostname.
+Open a new PowerShell window and copy the phrase under `run the following command` on the Cloudflare website and paste it into the PowerShell window and scroll down and wait for **"Connectors"** to show your computer as connected and press next.
 
-<h2 align="center">7. Making ID 1's account</h2>
+On domain put your domain and type put http and url put `localhost:5000` and press save hostname.
 
-On your site, sign up as usual, and your application should be automatically accepted by the backend.
+---
 
-<h2 align="center">8. Running the site</h2>
+## 7. Making ID 1's Account
 
-For running the website 24/7, I suggest buying a VPS, which is a Server which hosts your website. Don't get the cheapest one, as they are usually shit.
+On your site, sign up as usual, and your application should be **automatically accepted by the backend.**
 
-To run the site, run ```start site.bat``` which is located in ```services```.
+---
 
-**Economy Simulator is now runnning!**
+## 8. Running the Site
 
-happy skidding
+For running the website 24/7, I suggest buying a VPS, which is a Server which hosts your website. *Don't get the cheapest one, as they are usually shit.*
 
-- vexi
+To run the site, run `start site.bat` which is located in `services`.
+
+**Economy Simulator is now running!**
+
+*happy skidding*
+
+- **vexi**
+
+</div>
