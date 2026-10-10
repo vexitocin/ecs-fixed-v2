@@ -2,7 +2,7 @@
   <img src="https://raw.githubusercontent.com/vexitocin/ecs-fixed-v2/refs/heads/main/services/2016-roblox-main/public/img/roblox_logo.svg" alt="Roblox Logo" width="200" />
 </div>
 
-<h1 align="center">Economy Simulator Source Code (Fixed)</h1>
+<h1 align="center">Fixed Economy Simulator (ECS) Source Code</h1>
 
 <div align="center">
 
