@@ -1,28 +1,54 @@
-1. setup ubuntu and redis
+# Economy Simulator source code (fixed)
 
-go to powershell as administrator, then do ```wsl --install``` if you get erorrs enable "Windows Subsystem For Linux" and "Windows Virtual Machine" in the windows features.
+For this to work you will need a Domain, and Windows (Linux hasn't been tested yet).
 
-Once it's done, restart your computer then ubuntu will open, let it install. itll ask for a uixd name enter a name such as ecs or anythng. then a password. 
+## 1. Installing Redis
+Open PowerShell as Administrator, then run ```wsl --install```. This installs Ubuntu on Windows.
 
-Do ```sudo apt update``` then after its done do ```sudo apt install redis``` and press y when it asks, when its done do ```redis-server``` now keep this open.
+if you get an error, enable "Windows Subsystem For Linux" and "Windows Virtual Machine" in the "Turn Windows features on or off" application.
 
-2. get apps
+Once installation is complete, restart your computer then open WSL, Ubuntu will open, let it install.
 
-node.js: ```https://nodejs.org/dist/v18.16.1/node-v18.16.1-x64.msi```
+Afterwards, it will ask for a uixd name. Enter a name such as "ECS", or whatever name you want. then enter a password. 
 
-postgreSQL: ```https://sbp.enterprisedb.com/getfile.jsp?fileid=1258627```
+Run ```sudo apt update``` after its done installing, after it updates its packages run ```sudo apt install redis``` and press the "y" key when it asks for approval.
 
-Dotnet 6: ```https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.412-windows-x64-installer```
+When it has finished installing run ```redis-server```. Keep this window open!
 
-Go lang: ```https://go.dev/dl/go1.20.6.windows-amd64.msi```
+## 2. Installing the other Prerequistes
+These are all ```.msi``` files which install the other required applications for Economy Simulator to run. Don't run any of these yet!
 
-3. install
+Node.js 18: ```https://nodejs.org/dist/v18.16.1/node-v18.16.1-x64.msi```
 
-Press next until it asks for a password, make sure you remember this. then keep pressing next, wait for it to install. Then install node.js then dotnet 6 then go lang.
+PostgreSQL: ```https://sbp.enterprisedb.com/getfile.jsp?fileid=1258627```
 
-4. setting up 
+Dotnet 6.0: ```https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.412-windows-x64-installer```
 
-go to ```services/api``` and make a file named ```config.json``` and paste this code into it
+Golang: ```https://go.dev/dl/go1.20.6.windows-amd64.msi```
+
+## 3. Installing
+
+Run the installer msi file and press next until it asks for a password, make sure you remember this. then keep pressing next and wait for it to install.
+
+Then you can install Node.js, Dotnet and then Golang.
+
+## 4. Creating the Database
+
+Once PostgreSQL has installed, open the ```SQL Shell (psql)``` shortcut that has been made in your Start Menu (Windows Button).
+
+When the Shell opens, it will promt for a server, database, port and username. Press ```Enter``` for all of these, as these are the default options.
+
+Afterwards, it will prompt for the password you set earlier, enter it and you should be met with something like: ```postgres=#```
+
+Copy this command into the Shell, replacing ```database_name``` with your actual database name.
+
+```CREATE DATABASE database_name;```
+
+It should respond by saying "CREATE DATABASE", this means it was created successfully.
+
+## 5. Configuration
+### Part 1
+Navigate to ```services/api``` and make a file named ```config.json``` and paste this code into it.
 ```
 {
     "knex": {
@@ -36,18 +62,18 @@ go to ```services/api``` and make a file named ```config.json``` and paste this 
     }
 }
 ```
+Replace the Password and Database with the ones you have set.
 
-now go to the command in the ```services/api``` folder and paste this ```npm i``` which installs node modules, then do npx knex migrate:latest which installs the database tables and shit.
+Now open Command Prompt in the ```services/api``` folder and run ```npm i``` which installs the required node modules.
 
-now you have to go to ```services/Roblox/Roblox.Website``` open the appsettings.example.json file, and rename to appsettings.json and then go into it. go to line 37 and change the line ```    "OwnerUserId": "3",``` to ```    "OwnerUserId": "1",```
+When this completes, Run ```npx knex migrate:latest``` which saves the Database Tables and Structure to the one you have made.
 
-go to line 26 now, and change the line ```"Postgres": "Host=127.0.0.1; Database=economysimulator; Password=test; Username=postgres; Maximum Pool Size=20",``` to 
+### Part 2
+Now Navigate to ```services/Roblox/Roblox.Website``` and rename ```appsettings.example.json``` to ```appsettings.json``` and then open it. go to line 37 and change the line ```"OwnerUserId": "12",``` to ```"OwnerUserId": "1",```
 
-``` "Postgres": "Host=127.0.0.1; Database=postgres; Password=password; Username=postgres; Maximum Pool Size=20",```
+Then navigate to line 26, and change the line ```"Postgres": "Host=127.0.0.1; Database=economysimulator; Password=test; Username=postgres; Maximum Pool Size=20",``` to ``` "Postgres": "Host=127.0.0.1; Database=your_database; Password=your_password; Username=postgres; Maximum Pool Size=20",```, replacing the Database and Password once again
 
-Now press ```ctrl + h``` and change C:\\Users\\mark\\Desktop\\ to C:\\Users\\yourusername\\Downloads\\``` FOR EVERY SINGLE ONE, MAKE SURE THE FOLDER IS NAMED ECS AND IN DOWNLOADS
-
-now appsettings are done.
+Now press ```ctrl + h``` and change 
 
 Go into ```services/api``` create a folder named ```storage``` inside that folder make one named ```asset``` then go to ```services/api/public/images``` make a folder named ```thumbnails``` and ```group```
 
