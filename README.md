@@ -1,4 +1,4 @@
-<img align="center" href="https://imglink.cc/cdn/dCa6FTDDjD.png">
+<a align="center" href="https://imglink.cc/cdn/dCa6FTDDjD.png">
 <h1 align="center">Economy Simulator Source Code (Fixed)</h1>
 
 <div align="center">
