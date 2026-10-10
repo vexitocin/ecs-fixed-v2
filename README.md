@@ -1,8 +1,8 @@
 <h1 align="center">Economy Simulator source code (fixed)</h1>
 
-<p align="center">For this to work you will need a Domain, and Windows (Linux hasn't been tested yet).
+<p align="center">For this to work you will need a Domain, and Windows (Linux hasn't been tested yet).</p>
 
-The WebClient will be added soon.</p>
+<p align="center">The WebClient will be added soon.</p>
 
 <h2 align="center">1. Installing Redis</h2>
 
