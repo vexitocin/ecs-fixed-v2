@@ -28,6 +28,8 @@ Run `sudo apt update` after its done installing, after it updates its packages r
 
 When it has finished installing run `redis-server`. **Keep this window open!**
 
+**ALTERNATIVELY** you can install Redis for Windows, which will be added to this tutorial later
+
 </div>
 
 <h2 align="center">2. Installing the Other Prerequisites</h2>
