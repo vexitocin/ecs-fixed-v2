@@ -269,8 +269,4 @@ To run the site, run `start site.bat` which is located in `services`.
 
 **Economy Simulator is now running!**
 
-*happy skidding*
-
-* **vexi**
-
 </div>
